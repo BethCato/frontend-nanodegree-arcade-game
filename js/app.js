@@ -9,13 +9,13 @@ var charImage = "";
 function favchar() {
     var pickList = document.getElementById("myList");
     charImage = pickList.options[pickList.selectedIndex].text;
-    if (charImage != "") {player.image = 'images/' + charImage + '.png'}
+    if (charImage !== "") {player.image = 'images/' + charImage + '.png'}
     // Move focus away from the picklist to continue game.
     myList.blur();
-    };
+}
 
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function () {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     // Create the prototype object
@@ -23,17 +23,17 @@ var Enemy = function() {
     // Each enemy has its own location.
     // Start all our enemies in a random spot - setting the horizonal posiiton
     // relative to canvas:
-    obj.x = Math.random()*1000 | 0;
+    obj.x = Math.random() * 1000 | 0;
     // Start all our enemies in a random spot - setting the vertical posiiton
     // relative to canvas, but inline with a stone row:
-    obj.y = 143 + (((Math.random()*10) % 3) | 0) * 83;
+    obj.y = 143 + (((Math.random() * 10) % 3) | 0) * 83;
     // Each enemy runs at a different speed.
     // Set this up to be randomly generated:
-    obj.speed = Math.random()*10;
+    obj.speed = Math.random() * 10;
     // If bug speed falls outside of the predetermined limits, 
     // reset to the predetermined limits
-    if (obj.speed > maxSpeed) {obj.speed = maxSpeed};
-    if (obj.speed < minSpeed) {obj.speed = minSpeed};
+    if (obj.speed > maxSpeed) {obj.speed = maxSpeed}
+    if (obj.speed < minSpeed) {obj.speed = minSpeed}
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     obj.sprite = 'images/enemy-bug.png';
@@ -42,7 +42,7 @@ var Enemy = function() {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+Enemy.prototype.update = function (dt) {
     // Multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
@@ -50,30 +50,30 @@ Enemy.prototype.update = function(dt) {
     // and speed and re-enter on left of canvas
     if (this.x > 500) {
         // Set enemy to re-emerge on the left
-        this.x = -100;  
+        this.x = -100;
         // Reset the enemy speed since it's re-emerging
-        this.speed = Math.random()*10;
-        if (this.speed < minSpeed) {this.speed = minSpeed};
-        if (this.speed > maxSpeed) {this.speed = maxSpeed};
+        this.speed = Math.random() * 10;
+        if (this.speed < minSpeed) {this.speed = minSpeed}
+        if (this.speed > maxSpeed) {this.speed = maxSpeed}
         // Select a random row to start enemy on
-        this.y = 143 + (((Math.random()*10) % 3) | 0) * 83;
+        this.y = 143 + (((Math.random() * 10) % 3) | 0) * 83;
     } else {
         // Otherwise, just move the enemy along using the dt parameter....
-        this.x = this.x + dt*100*this.speed;
-    };
-};
+        this.x = this.x + dt * 100 * this.speed;
+    }
+}
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+}
 
 
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 //----------------------------------
-var Hero = function() {
+var Hero = function () {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
     var obj = Object.create(Hero.prototype);
@@ -98,15 +98,15 @@ var Hero = function() {
     // The image for our hero will start out being a boy but can be changed
     obj.image = 'images/Boy.png';
     return obj;
-};
+}
 
-Hero.prototype.update = function() {
+Hero.prototype.update = function () {
     // Based on x and y, make sure hero doesn't go off the canvas.
     // Keep hero from falling off left or right sides.
-    if (this.x < 0) {this.x = 0};
-    if (this.x > 500) {this.x = this.x - 101};
+    if (this.x < 0) {this.x = 0}
+    if (this.x > 500) {this.x = this.x - 101}
     // Keep hero from falling off bottom of canvas
-    if (this.y > 459) {this.y = this.y - 83};
+    if (this.y > 459) {this.y = this.y - 83}
     // A hero at the top is a winner!
     // Update player statuses and increase level if more than 4 wins on each level.
     if (this.y <= 70) {
@@ -114,7 +114,7 @@ Hero.prototype.update = function() {
         this.wins = this.wins + 1;
         this.points = this.points + 500;
         // For every 5 wins, increase the level
-        if ((this.wins%5) === 0) {
+        if ((this.wins % 5) === 0) {
             this.level++;
             // increase lives
             this.hearts++;
@@ -123,9 +123,9 @@ Hero.prototype.update = function() {
             // Now make it harder - increase bug max speed and add another bug to the game!
             maxSpeed++;
             allEnemies.push(Enemy());
-        };
-    };
-};
+        }
+    }
+}
 
 // Check for collisions with the hero:  If both the x and y locations of our hero an another
 // object within a certain range, then a collision has occurred.
@@ -142,16 +142,16 @@ Hero.prototype.checkCollisions = function (objectx,objecty,objectId) {
                 if (this.collision === "false") {
                     this.hearts = this.hearts - 1;
                     this.collision = "true";
-                };
+                }
                 // If the player has no lives left, game is over.
-                if (this.hearts === 0) {this.status = "GAME OVER!!"};
+                if (this.hearts === 0) {this.status = "GAME OVER!!"}
             } else {
                 // Collision with a rock or other object that blocks a path?
                 if (bonus.otherAction === "blockPath") {
-                    if (this.lastDirection === "left") {this.x = this.x + 101};
-                    if (this.lastDirection === "right") {this.x = this.x - 101};
-                    if (this.lastDirection ===  'up') {this.y = this.y + 83};
-                    if (this.lastDirection ===  'down') {this.y = this.y - 83};
+                    if (this.lastDirection === "left") {this.x = this.x + 101}
+                    if (this.lastDirection === "right") {this.x = this.x - 101}
+                    if (this.lastDirection ===  'up') {this.y = this.y + 83}
+                    if (this.lastDirection ===  'down') {this.y = this.y - 83}
                 } else {
                     //collision with a non-enemy non-rock
                     this.points = this.points + bonus.pvalue;
@@ -159,30 +159,30 @@ Hero.prototype.checkCollisions = function (objectx,objecty,objectId) {
                     this.keys = this.keys + bonus.kvalue;
                     // for every 5 keys collected, bump up the level
                     if (this.keys === 5 || bonus.otherAction === "newLevel") {
-                        if (this.keys === 5) {this.keys = 0};
+                        if (this.keys === 5) {this.keys = 0}
                         this.level++;
                         // Update player status to be displayed on the canvas
                         this.status = "NEW LEVEL...";
                         // Now make it harder - increase bug max speed and add another bug to the game!
                         maxSpeed++;
                         allEnemies.push(Enemy());
-                    };
-                    if (bonus.otherAction === "removeEnemy") {allEnemies.pop(Enemy())};
+                    }
+                    if (bonus.otherAction === "removeEnemy") {allEnemies.pop(Enemy())}
                     //remove bonus from screen unless its a rock
                     bonus = "";
-                };
-            };
-        };
-    };
-};
+                }
+            }
+        }
+    }
+}
 
 // Draw the enemy on the screen, required method for game
-Hero.prototype.render = function() {
+Hero.prototype.render = function () {
     ctx.drawImage(Resources.get(this.image), this.x, this.y);
-};
+}
 
 // Update position of hero on canvas based on keyboard input
-Hero.prototype.handleInput = function(pressedKey) {
+Hero.prototype.handleInput = function (pressedKey) {
     var deltime = (Date.now() - this.lastmove) / 1000;
     // If key presses build up in the buffer don't move hero for each
     // key press in the buffer.  Hero must wait a certain time to move.
@@ -192,19 +192,19 @@ Hero.prototype.handleInput = function(pressedKey) {
         if (pressedKey === 'left') {
             this.x = this.x - 101;
             this.lastDirection = "left";
-        };
+        }
         if (pressedKey === 'right') {this.x = this.x + 101;
             this.lastDirection = "right";
-        };
+        }
         if (pressedKey === 'up') {this.y = this.y - 83;
             this.lastDirection = "up";
-        };
+        }
         if (pressedKey === 'down') {this.y = this.y +83;
             this.lastDirection = "down";
-        };
+        }
         this.lastmove = Date.now();
-    };
-};
+    }
+}
 
 var PointsPlus = function (image,pvalue,hvalue,kvalue,action) {
     var obj = Object.create(PointsPlus.prototype);
@@ -216,16 +216,16 @@ var PointsPlus = function (image,pvalue,hvalue,kvalue,action) {
     obj.kvalue = kvalue;        //number of keys this item give to character
     obj.otherAction = action;
     return obj;
-};
+}
 
 // Draw the enemy on the screen, required method for game
-PointsPlus.prototype.render = function() {
+PointsPlus.prototype.render = function () {
     ctx.drawImage(Resources.get(this.image), this.x, this.y);
-};
+}
 
-PointsPlus.prototype.update = function(){
+PointsPlus.prototype.update = function () {
     //check for collision with our hero and update if one happens
-};
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -237,7 +237,7 @@ var allEnemies = [];
 var i = 0;
 for (i = 0; i < maxEnemies; i++) {
     allEnemies.push(Enemy());
-};
+}
 
 // Place the player object in a variable called player
 var player = Hero();
@@ -275,16 +275,15 @@ bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
 bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
 
-
 // Randomly select one bonus item to display
-var bonus = bonuses[Math.floor(Math.random()*bonuses.length)];
+var bonus = bonuses[Math.floor(Math.random() * bonuses.length)];
 // Put bonus item on stone path or in water:
 // bonus.x = (((Math.random()*10) % 4) | 0) * 101;
 //bonus.y = 60 + (((Math.random()*10) % 3) | 0) * 83;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',

@@ -58,7 +58,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -153,7 +153,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-        if (bonus != "") {bonus.render()};
+        if (bonus !== "") {bonus.render()}
         player.render();
     }
 
@@ -191,7 +191,7 @@ var Engine = (function(global) {
         if (player.status === "NEW LEVEL...") {
             ctx.drawImage(Resources.get("images/Selector.png"), player.x, player.y);
             ctx.drawImage(Resources.get(player.image), player.x, player.y);
-        };
+        }
 
     }
 
@@ -200,7 +200,7 @@ var Engine = (function(global) {
      */
     function reset(msecs) {
         msecs += new Date().getTime();
-        while (new Date() < msecs) { };  //pauses all game action on the screen
+        while (new Date() < msecs) { } //pauses all game action on the screen
         player.x = 202;
         player.y = 459;
         player.status = "";
@@ -215,9 +215,9 @@ var Engine = (function(global) {
         // between 0 and 4.  Use it to determine column for bonus item.
         bonus.x = (((Math.random()*10) % 5) | 0) * 101;
         // Set the y value of the bonus to a row of water or stones:
-        // (((Math.random()*10) % 3) | 0)  -> generates a whole number
-        // between 0 and 2.  Use it to determine row for bonus item.
-        bonus.y = 60 + (((Math.random()*10) % 3) | 0) * 83;        
+        // (((Math.random()*10) % 4) | 0)  -> generates a whole number
+        // between 0 and 3.  Use it to determine row for bonus item.
+        bonus.y = 60 + (((Math.random()*10) % 4) | 0) * 83;        
     }
 
     /* This function checks the status of the player and does nothing 
@@ -227,11 +227,11 @@ var Engine = (function(global) {
         if (player.status === "GAME OVER!!") {
             reset(2000);
             window.location.reload()
-        };
+        }
         if (player.status != "") {
             reset(2000);            
-        };
-    };
+        }
+    }
    
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when

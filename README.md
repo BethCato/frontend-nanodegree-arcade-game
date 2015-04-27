@@ -8,6 +8,10 @@ Character Selection:
 	You can play this game using the default character, or select a different character using the dropdown box at the top of the page.
 
 
+Starting the game:
+
+	To run the game, open the index.html file in your browser.
+
 Object of the game:
 
 	Get your player safely across the sidewalk and into the water.  (It's hot outside
@@ -36,7 +40,7 @@ How to play:
 		Key: Plus 3000 points.  When you collect 5, you also go up a level.  When that 
 		happens, the key count gets reset back to 0.
 		
-		Star: New Level and 10000 points 
+		Star: New Level and 10,000 points 
 
 		Bugspray: No points but it automatically eliminates one bug!
 
