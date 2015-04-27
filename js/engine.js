@@ -207,9 +207,14 @@ var Engine = (function(global) {
         // Randomly select one bonus item to display
         bonus = bonuses[Math.floor(Math.random()*bonuses.length)];
         // Put bonus item on stone path or water:
-        bonus.x = (((Math.random()*10) % 4) | 0) * 101;
-        //bonus.y = 60 + (((Math.random()*10) % 3) | 0) * 83;
-        bonus.y = 309 + (((Math.random()*10) % 3) | 0) * 83;
+        // (((Math.random()*10) % 5) | 0)  -> generates a whole number
+        // between 0 and 4.  Use it to determine column for bonus item.
+        bonus.x = (((Math.random()*10) % 5) | 0) * 101;
+        console.log(bonus.x)
+        // Set the y value of the bonus to a row of water or stones:
+        // (((Math.random()*10) % 3) | 0)  -> generates a whole number
+        // between 0 and 2.  Use it to determine row for bonus item.
+        bonus.y = 60 + (((Math.random()*10) % 3) | 0) * 83;        
     }
 
     /* This function checks the status of the player and does nothing 
