@@ -36,7 +36,9 @@ How to play:
 		Key: Plus 3000 points.  When you collect 5, you also go up a level.  When that 
 		happens, the key count gets reset back to 0.
 		
-		Star: Squash a bug (one goes away) plus 1000 points
+		Star: New Level and 10000 points 
+
+		Bugspray: No points but it automatically eliminates one bug!
 
 To reset the game, refresh your browser.
 

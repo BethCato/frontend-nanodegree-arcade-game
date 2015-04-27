@@ -158,8 +158,8 @@ Hero.prototype.checkCollisions = function (objectx,objecty,objectId) {
                     this.hearts = this.hearts + bonus.hvalue;
                     this.keys = this.keys + bonus.kvalue;
                     // for every 5 keys collected, bump up the level
-                    if (this.keys === 5) {
-                        this.keys = 0;
+                    if (this.keys === 5 || bonus.otherAction === "newLevel") {
+                        if (this.keys === 5) {this.keys = 0};
                         this.level++;
                         // Update player status to be displayed on the canvas
                         this.status = "NEW LEVEL...";
@@ -255,16 +255,10 @@ bonuses.push(PointsPlus('images/Gem Green.png',1500,0,0,'none'));
 bonuses.push(PointsPlus('images/Gem Blue.png',500,0,0,'none'));
 bonuses.push(PointsPlus('images/Gem Orange.png',1000,0,0,'none'));
 bonuses.push(PointsPlus('images/Gem Green.png',1500,0,0,'none'));
-bonuses.push(PointsPlus('images/Gem Blue.png',500,0,0,'none'));
-bonuses.push(PointsPlus('images/Gem Orange.png',1000,0,0,'none'));
-bonuses.push(PointsPlus('images/Gem Green.png',1500,0,0,'none'));
-bonuses.push(PointsPlus('images/Gem Blue.png',500,0,0,'none'));
-bonuses.push(PointsPlus('images/Gem Orange.png',1000,0,0,'none'));
-bonuses.push(PointsPlus('images/Gem Green.png',1500,0,0,'none'));
 bonuses.push(PointsPlus('images/Heart.png',2000,1,0,'none'));
 bonuses.push(PointsPlus('images/Key.png',3000,0,1,'none'));
-bonuses.push(PointsPlus('images/Star.png',1000,0,0,'removeEnemy'));
-bonuses.push(PointsPlus('images/Star.png',1000,0,0,'removeEnemy'));
+bonuses.push(PointsPlus('images/Key.png',3000,0,1,'none'));
+bonuses.push(PointsPlus('images/Star.png',10000,0,0,'newLevel'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
@@ -278,6 +272,9 @@ bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
+bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
+bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
+
 
 // Randomly select one bonus item to display
 var bonus = bonuses[Math.floor(Math.random()*bonuses.length)];

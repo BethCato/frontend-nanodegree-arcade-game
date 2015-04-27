@@ -254,7 +254,8 @@ var Engine = (function(global) {
         'images/Heart.png',
         'images/Key.png',
         'images/Rock.png',
-        'images/Star.png'
+        'images/Star.png',
+        'images/Bugspray.png'
     ]);
     Resources.onReady(init);
 
