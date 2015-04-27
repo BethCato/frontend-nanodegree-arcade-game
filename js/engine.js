@@ -164,16 +164,20 @@ var Engine = (function(global) {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
         ctx.fillStyle = "white";
-        ctx.fillText("Lives: " + player.hearts, 0, canvas.height-50);
-        ctx.strokeText("Lives: " + player.hearts, 0, canvas.height-50);
+        ctx.fillText("Lives: " + player.hearts, 10, canvas.height-50);
+        ctx.strokeText("Lives: " + player.hearts, 10, canvas.height-50);
         // Display points
-        ctx.textAlign="center";
-        ctx.fillText("Points: " + player.points, canvas.width / 2, 85);
-        ctx.strokeText("Points: " + player.points, canvas.width / 2, 85);
+        ctx.textAlign="left";
+        ctx.fillText("Points: " + player.points, 10, 85);
+        ctx.strokeText("Points: " + player.points, 10, 85);
+        // Display keys
+        ctx.textAlign="right";
+        ctx.fillText("Keys: " + player.keys, canvas.width-10, 85);
+        ctx.strokeText("Keys: " + player.keys, canvas.width-10, 85);
         // Display number of wins
         ctx.textAlign="right";
-        ctx.fillText("Wins: " + player.wins, canvas.width, canvas.height-50);
-        ctx.strokeText("Wins: " + player.wins, canvas.width, canvas.height-50);
+        ctx.fillText("Wins: " + player.wins, canvas.width-10, canvas.height-50);
+        ctx.strokeText("Wins: " + player.wins, canvas.width-10, canvas.height-50);
         // Display level
         ctx.textAlign="center";
         ctx.fillText("Level: " + (player.level | 0), canvas.width / 2, canvas.height-50);
@@ -210,7 +214,6 @@ var Engine = (function(global) {
         // (((Math.random()*10) % 5) | 0)  -> generates a whole number
         // between 0 and 4.  Use it to determine column for bonus item.
         bonus.x = (((Math.random()*10) % 5) | 0) * 101;
-        console.log(bonus.x)
         // Set the y value of the bonus to a row of water or stones:
         // (((Math.random()*10) % 3) | 0)  -> generates a whole number
         // between 0 and 2.  Use it to determine row for bonus item.

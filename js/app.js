@@ -208,12 +208,12 @@ Hero.prototype.handleInput = function(pressedKey) {
 
 var PointsPlus = function (image,pvalue,hvalue,kvalue,action) {
     var obj = Object.create(PointsPlus.prototype);
-    obj.x = 100;
+    obj.x = 100;   
     obj.y = 100;
-    obj.image = image;
-    obj.pvalue = pvalue;
-    obj.hvalue = hvalue;
-    obj.kvalue = kvalue;
+    obj.image = image;          //image of the bonus object
+    obj.pvalue = pvalue;        //points value for this object
+    obj.hvalue = hvalue;        //number of lives this item adds to character
+    obj.kvalue = kvalue;        //number of keys this item give to character
     obj.otherAction = action;
     return obj;
 };
@@ -278,7 +278,6 @@ bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-
 
 // Randomly select one bonus item to display
 var bonus = bonuses[Math.floor(Math.random()*bonuses.length)];
