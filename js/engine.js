@@ -26,7 +26,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 505;
-    canvas.height = 606;
+    canvas.height = 707;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -39,12 +39,13 @@ var Engine = (function(global) {
          * would be the same for everyone (regardless of how fast their
          * computer is) - hurray time!
          */
-        var now = Date.now(),
-            dt = (now - lastTime) / 1000.0;
+        var now = Date.now();
+            dt = (now - lastTime) / 1000;            
 
-        /* Call our update/render functions, pass along the time delta to
+        /* Call our checkStatus/update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
+        checkStatus();
         update(dt);
         render();
 
@@ -80,10 +81,9 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
     }
 
-    /* This is called by the update function  and loops through all of the
+    /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
      * player object. These update methods should focus purely on updating
@@ -91,12 +91,14 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        player.checkCollisions(bonus.x, bonus.y, "bonus");
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
+            player.checkCollisions(enemy.x, enemy.y,"enemy");
         });
         player.update();
     }
-
+    
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -109,14 +111,15 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/water-block.png',   // Top row is water
+                'images/water-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = canvas.height / 101,
+            numCols = canvas.width / 101,
             row, col;
 
         /* Loop through the number of rows and columns we've defined above
@@ -135,9 +138,8 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-
         renderEntities();
+        renderExtras();
     }
 
     /* This function is called by the render function and is called on each game
@@ -151,18 +153,78 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
+        if (bonus != "") {bonus.render()};
         player.render();
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        // noop
+    function renderExtras() {
+        // Display all the status on the screen 
+        ctx.font = "20pt impact";
+        ctx.textAlign="left";
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.fillStyle = "white";
+        ctx.fillText("Lives: " + player.hearts, 0, canvas.height-50);
+        ctx.strokeText("Lives: " + player.hearts, 0, canvas.height-50);
+        // Display points
+        ctx.textAlign="center";
+        ctx.fillText("Points: " + player.points, canvas.width / 2, 85);
+        ctx.strokeText("Points: " + player.points, canvas.width / 2, 85);
+        // Display number of wins
+        ctx.textAlign="right";
+        ctx.fillText("Wins: " + player.wins, canvas.width, canvas.height-50);
+        ctx.strokeText("Wins: " + player.wins, canvas.width, canvas.height-50);
+        // Display level
+        ctx.textAlign="center";
+        ctx.fillText("Level: " + (player.level | 0), canvas.width / 2, canvas.height-50);
+        ctx.strokeText("Level: " + (player.level | 0), canvas.width / 2, canvas.height-50);
+        // Display player message.  If player is in play, message is blank.
+        ctx.font = "50pt impact";
+        ctx.textAlign="center";
+        ctx.fillText(player.status, canvas.width / 2, canvas.height / 2);
+        ctx.strokeText(player.status, canvas.width / 2, canvas.height / 2);
+        // Put a start under our player if he is moving to a new level
+        if (player.status === "NEW LEVEL...") {
+            ctx.drawImage(Resources.get("images/Selector.png"), player.x, player.y);
+            ctx.drawImage(Resources.get(player.image), player.x, player.y);
+        };
+
     }
 
+    /* This function pauses the game play and resets the player.  It's called by 
+     * the checkStatus function when a player has either won or lost.
+     */
+    function reset(msecs) {
+        msecs += new Date().getTime();
+        while (new Date() < msecs) { };  //pauses all game action on the screen
+        player.x = 202;
+        player.y = 459;
+        player.status = "";
+        player.collision = "false";
+        // Set player lastmove time so key presses during pause will not be processed.
+        player.lastmove = Date.now();
+
+        // Randomly select one bonus item to display
+        bonus = bonuses[Math.floor(Math.random()*bonuses.length)];
+        // Put bonus item on stone path or water:
+        bonus.x = (((Math.random()*10) % 4) | 0) * 101;
+        //bonus.y = 60 + (((Math.random()*10) % 3) | 0) * 83;
+        bonus.y = 309 + (((Math.random()*10) % 3) | 0) * 83;
+    }
+
+    /* This function checks the status of the player and does nothing 
+     * while the player is in play (player.status = "")
+     */
+     function checkStatus() {
+        if (player.status === "GAME OVER!!") {
+            reset(2000);
+            window.location.reload()
+        };
+        if (player.status != "") {
+            reset(2000);            
+        };
+    };
+   
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.
@@ -172,7 +234,19 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/Boy.png',
+        'images/Cat-Girl.png',
+        'images/Horn-Girl.png',
+        'images/Pink-Girl.png',
+        'images/Princess.png',
+        'images/Selector.png',
+        'images/Gem Blue.png',
+        'images/Gem Orange.png',
+        'images/Gem Green.png',
+        'images/Heart.png',
+        'images/Key.png',
+        'images/Rock.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
