@@ -10,7 +10,8 @@ Character Selection:
 
 Object of the game:
 
-	Get your player safely across the sidewalk and into the water.  (It's hot outside and your hero needs to cool off!)
+	Get your player safely across the sidewalk and into the water.  (It's hot outside
+	and your hero needs to cool off!)
 
 	Earn points along the way and try to get more points than your little brother.  That will
 	give him another reason to look up to you.  :)
