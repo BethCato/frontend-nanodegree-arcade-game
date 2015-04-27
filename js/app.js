@@ -38,7 +38,7 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     obj.sprite = 'images/enemy-bug.png';
     return obj;
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -61,12 +61,12 @@ Enemy.prototype.update = function (dt) {
         // Otherwise, just move the enemy along using the dt parameter....
         this.x = this.x + dt * 100 * this.speed;
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 
 // Now write your own player class
@@ -98,7 +98,7 @@ var Hero = function () {
     // The image for our hero will start out being a boy but can be changed
     obj.image = 'images/Boy.png';
     return obj;
-}
+};
 
 Hero.prototype.update = function () {
     // Based on x and y, make sure hero doesn't go off the canvas.
@@ -125,7 +125,7 @@ Hero.prototype.update = function () {
             allEnemies.push(Enemy());
         }
     }
-}
+};
 
 // Check for collisions with the hero:  If both the x and y locations of our hero an another
 // object within a certain range, then a collision has occurred.
@@ -174,7 +174,7 @@ Hero.prototype.checkCollisions = function (objectx,objecty,objectId) {
             }
         }
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Hero.prototype.render = function () {
@@ -193,13 +193,16 @@ Hero.prototype.handleInput = function (pressedKey) {
             this.x = this.x - 101;
             this.lastDirection = "left";
         }
-        if (pressedKey === 'right') {this.x = this.x + 101;
+        if (pressedKey === 'right') {
+            this.x = this.x + 101;
             this.lastDirection = "right";
         }
-        if (pressedKey === 'up') {this.y = this.y - 83;
+        if (pressedKey === 'up') {
+            this.y = this.y - 83;
             this.lastDirection = "up";
         }
-        if (pressedKey === 'down') {this.y = this.y +83;
+        if (pressedKey === 'down') {
+            this.y = this.y +83;
             this.lastDirection = "down";
         }
         this.lastmove = Date.now();
