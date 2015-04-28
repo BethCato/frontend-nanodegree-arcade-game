@@ -40,7 +40,7 @@ var Engine = (function(global) {
          * computer is) - hurray time!
          */
         var now = Date.now();
-            dt = (now - lastTime) / 1000;            
+            dt = (now - lastTime) / 1000;
 
         /* Call our checkStatus/update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
@@ -98,7 +98,7 @@ var Engine = (function(global) {
         });
         player.update();
     }
-    
+
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -217,7 +217,7 @@ var Engine = (function(global) {
         // Set the y value of the bonus to a row of water or stones:
         // (((Math.random()*10) % 4) | 0)  -> generates a whole number
         // between 0 and 3.  Use it to determine row for bonus item.
-        bonus.y = 60 + (((Math.random()*10) % 4) | 0) * 83;        
+        bonus.y = 60 + (((Math.random()*10) % 4) | 0) * 83;
     }
 
     /* This function checks the status of the player and does nothing 
@@ -229,10 +229,10 @@ var Engine = (function(global) {
             window.location.reload()
         }
         if (player.status != "") {
-            reset(2000);            
+            reset(2000);
         }
     }
-   
+
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
      * all of these images are properly loaded our game will start.

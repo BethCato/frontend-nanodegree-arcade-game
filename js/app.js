@@ -30,7 +30,7 @@ var Enemy = function () {
     // Each enemy runs at a different speed.
     // Set this up to be randomly generated:
     obj.speed = Math.random() * 10;
-    // If bug speed falls outside of the predetermined limits, 
+    // If bug speed falls outside of the predetermined limits,
     // reset to the predetermined limits
     if (obj.speed > maxSpeed) {obj.speed = maxSpeed}
     if (obj.speed < minSpeed) {obj.speed = minSpeed}
@@ -46,7 +46,7 @@ Enemy.prototype.update = function (dt) {
     // Multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    // If enemy is off the canvas - reset enemy's vertical position 
+    // If enemy is off the canvas - reset enemy's vertical position
     // and speed and re-enter on left of canvas
     if (this.x > 500) {
         // Set enemy to re-emerge on the left
@@ -67,7 +67,6 @@ Enemy.prototype.update = function (dt) {
 Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -179,7 +178,7 @@ Hero.prototype.checkCollisions = function (objectx,objecty,objectId) {
 // Draw the enemy on the screen, required method for game
 Hero.prototype.render = function () {
     ctx.drawImage(Resources.get(this.image), this.x, this.y);
-}
+};
 
 // Update position of hero on canvas based on keyboard input
 Hero.prototype.handleInput = function (pressedKey) {
@@ -207,11 +206,11 @@ Hero.prototype.handleInput = function (pressedKey) {
         }
         this.lastmove = Date.now();
     }
-}
+};
 
 var PointsPlus = function (image,pvalue,hvalue,kvalue,action) {
     var obj = Object.create(PointsPlus.prototype);
-    obj.x = 100;   
+    obj.x = 100;
     obj.y = 100;
     obj.image = image;          //image of the bonus object
     obj.pvalue = pvalue;        //points value for this object
@@ -219,16 +218,12 @@ var PointsPlus = function (image,pvalue,hvalue,kvalue,action) {
     obj.kvalue = kvalue;        //number of keys this item give to character
     obj.otherAction = action;
     return obj;
-}
+};
 
 // Draw the enemy on the screen, required method for game
 PointsPlus.prototype.render = function () {
     ctx.drawImage(Resources.get(this.image), this.x, this.y);
-}
-
-PointsPlus.prototype.update = function () {
-    //check for collision with our hero and update if one happens
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -251,7 +246,6 @@ var bonuses = [];
 //  A single bonus item is randomly selected from this list so
 //  we need mostly rocks and gems to choose from or the game is
 //  way too easy.
-
 bonuses.push(PointsPlus('images/Gem Blue.png',500,0,0,'none'));
 bonuses.push(PointsPlus('images/Gem Orange.png',1000,0,0,'none'));
 bonuses.push(PointsPlus('images/Gem Green.png',1500,0,0,'none'));
@@ -280,9 +274,6 @@ bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
 
 // Randomly select one bonus item to display
 var bonus = bonuses[Math.floor(Math.random() * bonuses.length)];
-// Put bonus item on stone path or in water:
-// bonus.x = (((Math.random()*10) % 4) | 0) * 101;
-//bonus.y = 60 + (((Math.random()*10) % 3) | 0) * 83;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
