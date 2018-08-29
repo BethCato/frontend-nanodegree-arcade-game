@@ -1,7 +1,7 @@
 // Set variables to start game.  If I add levels, I can modify these to make the game
 // more challenging.  Use these variable in the rest of the code.
 var maxEnemies = 3;
-var maxSpeed = 4;
+var maxSpeed = 2; /* was 4 */
 var minSpeed = 1;
 var charImage = "";
 
@@ -114,15 +114,18 @@ Hero.prototype.update = function () {
         this.points = this.points + 500;
         // For every 5 wins, increase the level
         if ((this.wins % 5) === 0) {
+            this.status = "NEW LEVEL...";
+        }
+    }
+    if (this.status === 'NEW LEVEL...') {
             this.level++;
             // increase lives
             this.hearts++;
-            // Update player status to be displayed on the canvas
-            this.status = "NEW LEVEL...";
             // Now make it harder - increase bug max speed and add another bug to the game!
-            maxSpeed++;
+            maxSpeed= maxSpeed + .5;
             allEnemies.push(Enemy());
-        }
+            // Add bugspray to the bonus array to increase odds of selection
+            bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
     }
 };
 
@@ -159,12 +162,12 @@ Hero.prototype.checkCollisions = function (objectx,objecty,objectId) {
                     // for every 5 keys collected, bump up the level
                     if (this.keys === 5 || bonus.otherAction === "newLevel") {
                         if (this.keys === 5) {this.keys = 0}
-                        this.level++;
+//                        this.level++;
                         // Update player status to be displayed on the canvas
                         this.status = "NEW LEVEL...";
                         // Now make it harder - increase bug max speed and add another bug to the game!
-                        maxSpeed++;
-                        allEnemies.push(Enemy());
+//                        maxSpeed++;
+//                        allEnemies.push(Enemy());
                     }
                     if (bonus.otherAction === "removeEnemy") {allEnemies.pop(Enemy())}
                     //remove bonus from screen unless its a rock
@@ -260,16 +263,6 @@ bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
 bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Rock.png',0,0,0,'blockPath'));
-bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
 bonuses.push(PointsPlus('images/Bugspray.png',0,0,0,'removeEnemy'));
 
 // Randomly select one bonus item to display

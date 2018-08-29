@@ -218,6 +218,14 @@ var Engine = (function(global) {
         // (((Math.random()*10) % 4) | 0)  -> generates a whole number
         // between 0 and 3.  Use it to determine row for bonus item.
         bonus.y = 60 + (((Math.random()*10) % 4) | 0) * 83;
+        // if bonus is rock, then only put on water or grass
+        if (bonus.otherAction === "blockPath") {
+            if (bonus.y > 225) {
+                bonus.y = 392;
+            }else {
+                bonus.y = 60;
+            }
+        }
     }
 
     /* This function checks the status of the player and does nothing 
