@@ -1,6 +1,6 @@
 frontend-nanodegree-arcade-game
 ===============================
-Beth Cato - 4/27/15
+Beth Cato - 8/29/18
 
 Welcome to my game!
 
